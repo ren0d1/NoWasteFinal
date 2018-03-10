@@ -1,0 +1,58 @@
+﻿@using NoWaste.Models
+@model Request
+
+
+<div id="chat">
+    <form id="frm-send-message">
+        <label for="message">Message:</label>
+        <input type="text" id="message" />
+        <input type="submit" id="send" value="Send" />
+    </form>
+    <div class="clear">
+    </div>
+    <ul id="messages">
+        @foreach (Message message in Model.Messages)
+        {
+            <li>@message.MessageContent</li>
+        }
+    </ul>
+</div>
+<script src="~/js/signalr.min.js"></script>
+<script>
+    let transportType = signalR.TransportType.WebSockets;
+    let http = new signalR.HttpConnection(`https://${document.location.host}/messages`, { transport: transportType });
+    let connection = new signalR.HubConnection(http);
+    connection.start();
+
+    connection.on('Message', (message) => {
+        appendLine(message.MessageContent);
+    });
+
+    document.getElementById('frm-send-message').addEventListener('submit', event => {
+        console.log("in");
+        let message = document.getElementById('message').value;
+        document.getElementById('message').value = '';
+
+        var date = new Date();
+        var model = @Html.Raw(Json.Serialize(Model, new Newtonsoft.Json.JsonSerializerSettings() {ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore }));
+        console.log(model);
+        var messageToBeSent = {
+            Seen: false,
+            Time: date,
+            Sender: model.User,
+            Request: model,
+            Advert: model.Advert,
+            MessageContent: message
+        }
+
+        connection.invoke('Message', messageToBeSent);
+        event.preventDefault();
+    });
+
+    function appendLine(line, color) {
+        let li = document.createElement('li');
+        li.innerText = line;
+        document.getElementById('messages').appendChild(li);
+    };
+
+</script>

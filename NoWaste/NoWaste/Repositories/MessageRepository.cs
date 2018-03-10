@@ -1,4 +1,5 @@
-﻿using NoWaste.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NoWaste.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace NoWaste.Repositories
     {
         public MessageRepository(ApplicationDbContext context) : base(context)
         {
+        }
+
+        public async Task<List<Message>> GetMessagesByAdvertId(int advertId)
+        {
+            return await Context.Messages.Include(m => m.Advert).Where(m => m.Advert.Id == advertId).ToListAsync();
         }
     }
 }

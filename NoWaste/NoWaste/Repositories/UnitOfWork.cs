@@ -11,6 +11,7 @@ namespace NoWaste.Repositories
         private readonly ApplicationDbContext context;
         private AdvertRepository advertRepository;
         private MessageRepository messageRepository;
+        private RequestRepository requestRepository;
         private UserRepository userRepository;
 
         public UnitOfWork(ApplicationDbContext context)
@@ -21,6 +22,8 @@ namespace NoWaste.Repositories
         public AdvertRepository Adverts => advertRepository ?? (advertRepository = new AdvertRepository(context));
 
         public MessageRepository Messages => messageRepository ?? (messageRepository = new MessageRepository(context));
+
+        public RequestRepository Requests => requestRepository ?? (requestRepository = new RequestRepository(context));
 
         public UserRepository Users => userRepository ?? (userRepository = new UserRepository(context));
 

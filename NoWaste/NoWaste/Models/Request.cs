@@ -12,6 +12,6 @@ namespace NoWaste.Models
 
         public User User { get; set; }
         public Advert Advert { get; set; }
-        public List<Message> Message  { get; set; }
+        public List<Message> Messages  { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace NoWaste.Repositories
             return await Context.Set<T>().Include(includePath).ToListAsync();
         }
 
-        public virtual async Task<T> GetById(int id)
+        public virtual async Task<T> GetByIdAsync(int id)
         {
             return await Context.Set<T>().FindAsync(id);
         }

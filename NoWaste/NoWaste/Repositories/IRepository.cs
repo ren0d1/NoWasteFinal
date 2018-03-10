@@ -10,7 +10,7 @@ namespace NoWaste.Repositories
     {
         Task<List<T>> SearchFor(Expression<Func<T, bool>> predicate);
         Task<List<T>> GetAllAsync();
-        Task<T> GetById(int id);
+        Task<T> GetByIdAsync(int id);
         Task<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<T>> Add(T entity);
         Task Delete(T entity);
     }

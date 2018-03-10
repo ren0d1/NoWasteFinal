@@ -19,7 +19,19 @@ namespace NoWaste.Hubs
 
         public async Task Message(Message message)
         {
-            await Clients.All.SendAsync("Message", message);
+            Message save = new Message
+            {
+                Seen = message.Seen,
+                Time = message.Time,
+                Sender = message.Sender,
+                Request = message.Request,
+                Advert = message.Advert,
+                MessageContent = message.MessageContent
+            };
+            await unitOfWork.Messages.Add(save);
+            await unitOfWork.SaveChangesAsync();
+
+            await Clients.All.SendAsync("Message", save);
         }
     }
 }

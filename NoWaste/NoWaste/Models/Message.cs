@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +10,8 @@ namespace NoWaste.Models
 {
     public class Message
     {
+        public int Id { get; set; }
+
         public Boolean Seen { get; set; }
 
         public DateTime Time { get; set; }

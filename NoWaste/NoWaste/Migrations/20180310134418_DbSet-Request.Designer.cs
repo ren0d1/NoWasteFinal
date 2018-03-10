@@ -11,9 +11,10 @@ using System;
 namespace NoWaste.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180310134418_DbSet-Request")]
+    partial class DbSetRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -326,7 +327,7 @@ namespace NoWaste.Data.Migrations
                         .HasForeignKey("AdvertId");
 
                     b.HasOne("NoWaste.Models.Request", "Request")
-                        .WithMany("Messages")
+                        .WithMany("Message")
                         .HasForeignKey("RequestId");
 
                     b.HasOne("NoWaste.Models.User", "Sender")

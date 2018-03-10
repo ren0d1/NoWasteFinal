@@ -17,7 +17,7 @@ namespace NoWaste.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Message>().HasKey(m => new { m.Time, m.SenderId, m.AdvertId });
+            builder.Entity<Message>().HasKey(m => new { m.Time, m.Sender, m.Advert });
         }
 
         public DbSet<Message> Messages { get; set; }

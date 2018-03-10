@@ -17,7 +17,7 @@ namespace NoWaste.Hubs
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task Message(String message)
+        public async Task Message(Message message)
         {
             await Clients.All.SendAsync("Message", message);
         }

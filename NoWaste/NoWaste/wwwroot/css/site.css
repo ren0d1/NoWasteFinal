@@ -48,7 +48,8 @@ input[type="file"] {
     border-radius: 50%;
     margin-bottom: 8px;
     margin-right: 8px;
-    border: 0px; 
+    border: 0px;
+    z-index: 2;
 }
 
 .add-button > a,
@@ -57,4 +58,26 @@ input[type="file"] {
 .add-button > a:focus {
     text-decoration: none;
     color: #fff;
+}
+
+.keywords-label{
+    font-family: Roboto;
+    font-size: 16px;
+    color: #a9a9a9;
+}
+
+#photo-disp {
+    background-color: #a9a9a9;
+    background-image: url('');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 180px;
+    padding: 60px;
+}
+
+.photo-disp .form-group {
+    margin: auto;
+    width: 100px;
+    height: 100px;
 }

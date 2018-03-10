@@ -11,8 +11,8 @@ using System;
 namespace NoWaste.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180310024523_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20180310204401_tpo")]
+    partial class tpo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,46 +134,77 @@ namespace NoWaste.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Date");
+                    b.Property<string>("Address")
+                        .IsRequired();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
-                    b.Property<bool>("IsVisible");
+                    b.Property<string>("KeyWords")
+                        .IsRequired();
 
-                    b.Property<string>("OwnerId");
+                    b.Property<string>("Location");
 
                     b.Property<string>("Picture");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Adverts");
                 });
 
             modelBuilder.Entity("NoWaste.Models.Message", b =>
                 {
-                    b.Property<DateTime>("Time");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("SenderId");
+                    b.Property<int?>("AdvertId");
 
-                    b.Property<int>("AdvertId");
+                    b.Property<string>("MessageContent");
 
-                    b.Property<string>("ReceiverId");
+                    b.Property<int?>("RequestId");
 
                     b.Property<bool>("Seen");
 
-                    b.HasKey("Time", "SenderId", "AdvertId");
+                    b.Property<string>("SenderId");
+
+                    b.Property<DateTime>("Time");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("AdvertId");
 
-                    b.HasIndex("ReceiverId");
+                    b.HasIndex("RequestId");
 
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("NoWaste.Models.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AdvertId");
+
+                    b.Property<bool>("IsAcquitted");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdvertId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("NoWaste.Models.User", b =>
@@ -182,8 +213,6 @@ namespace NoWaste.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("Address");
 
                     b.Property<DateTime>("Birthday");
 
@@ -198,6 +227,8 @@ namespace NoWaste.Data.Migrations
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
+
+                    b.Property<string>("Location");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -214,6 +245,8 @@ namespace NoWaste.Data.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("Photo");
 
                     b.Property<string>("SecurityStamp");
 
@@ -282,25 +315,35 @@ namespace NoWaste.Data.Migrations
 
             modelBuilder.Entity("NoWaste.Models.Advert", b =>
                 {
-                    b.HasOne("NoWaste.Models.User", "Owner")
+                    b.HasOne("NoWaste.Models.User")
                         .WithMany("Adverts")
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("NoWaste.Models.Message", b =>
                 {
                     b.HasOne("NoWaste.Models.Advert", "Advert")
                         .WithMany()
-                        .HasForeignKey("AdvertId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AdvertId");
 
-                    b.HasOne("NoWaste.Models.User", "Receiver")
-                        .WithMany("ReceivedMessages")
-                        .HasForeignKey("ReceiverId");
+                    b.HasOne("NoWaste.Models.Request", "Request")
+                        .WithMany("Message")
+                        .HasForeignKey("RequestId");
 
                     b.HasOne("NoWaste.Models.User", "Sender")
-                        .WithMany("SentMessages")
+                        .WithMany()
                         .HasForeignKey("SenderId");
+                });
+
+            modelBuilder.Entity("NoWaste.Models.Request", b =>
+                {
+                    b.HasOne("NoWaste.Models.Advert", "Advert")
+                        .WithMany()
+                        .HasForeignKey("AdvertId");
+
+                    b.HasOne("NoWaste.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

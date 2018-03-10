@@ -4,16 +4,6 @@
     ViewData["Title"] = "CreateAdvert";
 }
 <script src="~/js/Geocoding.js"></script>
-<!-- /ignore -->
-<!-- INSTRUCTIONS -->
-<!-- 2 CSS files are required: -->
-<!--   * Tag-it's base CSS (jquery.tagit.css). -->
-<!--   * Any theme CSS (either a jQuery UI theme such as "flick", or one that's bundled with Tag-it, e.g. tagit.ui-zendesk.css as in this example.) -->
-<!-- The base CSS and tagit.ui-zendesk.css theme are scoped to the Tag-it widget, so they shouldn't affect anything else in your site, unlike with jQuery UI themes. -->
-<!-- If you want the jQuery UI "flick" theme, you can use this instead, but it's not scoped to just Tag-it like tagit.ui-zendesk is: -->
-<!--   <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css"> -->
-<!-- The real deal -->
-
 <link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css">
 <link href="/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
 
@@ -76,6 +66,10 @@
                     $("#photoBlobInput").val(myJson);
                 });
         });
+        $('form').submit(function (e) {
+
+
+        })
     });
 </script>
 <div>

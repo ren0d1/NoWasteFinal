@@ -17,9 +17,8 @@ namespace NoWaste.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Request>().HasKey(r => new { r.AdvertId, r.UserId });
         }
-
-        public DbSet<Message> Messages { get; set; }
 
         public DbSet<Advert> Adverts { get; set; }
 

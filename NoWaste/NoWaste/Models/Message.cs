@@ -18,8 +18,6 @@ namespace NoWaste.Models
 
         public Request Request { get; set; }
 
-        public Advert Advert { get; set; }
-
         public string MessageContent { get; set; }
     }
 }

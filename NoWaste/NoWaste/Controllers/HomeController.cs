@@ -34,7 +34,6 @@ namespace NoWaste.Controllers
              {
                  List = l
              });
-            return View(new AdvertListViewModel() { List = adverts });
         }
 
         public IActionResult About()

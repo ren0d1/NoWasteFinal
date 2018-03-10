@@ -285,7 +285,19 @@ namespace NoWaste.Controllers
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+                var firstName = info.Principal.FindFirstValue(ClaimTypes.GivenName) ?? info.Principal.FindFirstValue(ClaimTypes.Name);
+                var lastName = info.Principal.FindFirstValue(ClaimTypes.Surname);
+                var phoneNumber = info.Principal.FindFirstValue(ClaimTypes.MobilePhone) ?? info.Principal.FindFirstValue(ClaimTypes.HomePhone);
+                var address = info.Principal.FindFirstValue(ClaimTypes.StreetAddress);
+                var postalCode = info.Principal.FindFirstValue(ClaimTypes.PostalCode);
+                var town = info.Principal.FindFirstValue(ClaimTypes.StateOrProvince);
+                if (address != null)
+                {
+                    address = address + ", " + postalCode + ", " + town;
+                }
+                var identifier = info.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+                var picture = "https://graph.facebook.com/" + identifier + "/picture?type=large";
+                return View("ExternalLogin", new ExternalLoginViewModel { Email = email, Firstname = firstName, Lastname = lastName, Picture = picture, Address = address, Phonenumber = phoneNumber });
             }
         }
 
@@ -302,7 +314,7 @@ namespace NoWaste.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email, FirstName = model.Firstname, LastName = model.Lastname, Photo = model.Picture, PhoneNumber = model.Phonenumber };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

@@ -1,22 +1,45 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using NoWaste.Models
-
+﻿@using Microsoft.AspNetCore.Identity;
+@using NoWaste.Models.HomeViewModels
+@model AdvertListViewModel
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @if (SignInManager.IsSignedIn(User))
 {
-    /* Afficher liste */
-    <button class="add-button">
-        <a href="../Home/CreateAdvert">
-            <i class="material-icons">add</i>
-        </a>
-    </button>
+    <style>
+        a:hover, a:visited, a:link, a:active {
+            text-decoration: none;
+        }
+
+        .demo-card-square.mdl-card {
+            width: 240px;
+            text-align: left;
+            display: inline-block;
+            padding: 2px;
+        }
+
+        .demo-card-square > .mdl-card__title {
+            color: #fff;
+        }
+
+        .bc_image {
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+    <div style="width:100%; text-align:center" ;>
+        @foreach (Advert adv in Model.List)
+        {
+            @Html.Partial("AdvertItem", adv);
+        }
+    </div>
+
 }
 else
 {
-    @await Html.PartialAsync("_Landing")
+    @await Html.PartialAsync("../Account/Login", new LoginViewModel());
 }

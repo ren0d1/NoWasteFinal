@@ -11,5 +11,9 @@ namespace NoWaste.Repositories
         public UserRepository(ApplicationDbContext context) : base(context)
         {
         }
+        public User GetUserByName(string name)
+        {
+            return SearchFor(u => u.UserName == name).Result.FirstOrDefault();
+        }
     }
 }

@@ -10,6 +10,11 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
+    <button class="add-button">
+        <a href="../Home/CreateAdvert">
+            <i class="material-icons">add</i>
+        </a>
+    </button>
     <style>
         a:hover, a:visited, a:link, a:active {
             text-decoration: none;
@@ -31,7 +36,7 @@
             background-repeat: no-repeat;
         }
     </style>
-    <div style="width:100%; text-align:center" ;>
+    <div style="width:100%; text-align:center";>
         @foreach (Advert adv in Model.List)
         {
             @Html.Partial("AdvertItem", adv);

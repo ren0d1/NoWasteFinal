@@ -4,6 +4,8 @@
     ViewData["Title"] = "CreateAdvert";
 }
 <script src="~/js/Geocoding.js"></script>
+<link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css">
+<link href="/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
 
 <h4>New Advert</h4>
 <hr />
@@ -11,7 +13,7 @@
     <div class="col-md-4">
         <form asp-action="CreateAdvert">
             <div class="form-group">
-                <input asp-for="Picture" class="form-control" type="hidden" />
+                <input asp-for="Picture" class="form-control" id="photoBlobInput" type="hidden" />
                 <label id="#bb" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
                     <i class="material-icons">add_a_photo</i>
                     <input type="file" name="Picture" id="Picture" />
@@ -24,7 +26,7 @@
             </div>
             <div class="mdl-textfield mdl-js-textfield">
                 <textarea asp-for="Description" class="mdl-textfield__input" type="text" rows="3" id="Description"></textarea>
-                <label asp-for="Description" class="mdl-textfield__label" for="Description">Description<br/><span asp-validation-for="Description" class="text-danger"></span></label>
+                <label asp-for="Description" class="mdl-textfield__label" for="Description">Description<br /><span asp-validation-for="Description" class="text-danger"></span></label>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
                 <label asp-for="Address" class="mdl-textfield__label" for="adr">Address <span asp-validation-for="Address" class="text-danger"></span></label>
@@ -37,7 +39,7 @@
                 <span asp-validation-for="KeyWords" class="text-danger"></span>
                 <label asp-for="KeyWords" class="mdl-textfield__label" for="KeyWords">KeyWords</label>
                 <input asp-for="KeyWords" class="form-control" type="hidden" />
-                <input asp-for="KeyWords" class="mdl-textfield__input" type="text" id="KeyWords" />
+                <ul name="KeyWords" id="KeyWords"></ul>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" />
@@ -51,7 +53,25 @@
         <i class="material-icons">arrow_back</i>
     </a>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    $(document).ready(function () {
+        $('#KeyWords').tagit();
+        $("input[type=file]").change(function () {
+            var formData = new FormData();
+            formData.append("picture", $(this).prop('files')[0]);
+            fetch('/api/picture', { method: "POST", body: formData })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (myJson) {
+                    $("#photoBlobInput").val(myJson);
+                });
+        });
+        $('form').submit(function (e) {
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+        })
+    });
+</script>

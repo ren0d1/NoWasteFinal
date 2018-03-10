@@ -27,7 +27,7 @@ namespace NoWaste.Controllers
                  Advert a = new Advert();
                  a.Title = "Test" + i;
                  a.Description = "AAAAAA AAAAAAA AAAAAA AAAAA AAAAAA AAAAAAA AAAAAAAA AAAAAA AAAAAAAA AAAAAAAAAA AAAAAAAAA";
-                 a.Picture = "http://www.bricotheque-chalon.fr/wp-content/uploads/2016/10/Vélo-rose.png";
+                 a.Picture = "http://www.bricotheque-chalon.fr/wp-content/uploads/2016/10/Vélo-rose.png"; /*DevSkim: ignore DS137138*/
                  l.Add(a);
              }
              return View(new AdvertListViewModel()
@@ -50,8 +50,8 @@ namespace NoWaste.Controllers
             return View();
         }
 
-        
-        public async Task<IActionResult> CreateAdvert()
+
+        public IActionResult CreateAdvert()
         {
             return View();
         }
@@ -68,7 +68,7 @@ namespace NoWaste.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Advert()
+        public IActionResult Advert()
         {
             return View();
         }

@@ -16,6 +16,14 @@
             <input asp-for="LastName" class="mdl-textfield__input" type="text" id="LastName" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
+        <div class="form-group">
+            <input asp-for="Photo" class="form-control" id="photoBlobInput" type="hidden" />
+            <label id="#bb" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                <i class="material-icons">add_a_photo</i>
+                <input type="file" name="Photo" id="Picture" />
+            </label>
+            <span asp-validation-for="Photo" class="text-danger"></span>
+        </div>
         <div class="mdl-textfield mdl-js-textfield">
             <label asp-for="Email" class="mdl-textfield__label" for="Email">Email</label>
             <input asp-for="Email" class="mdl-textfield__input" type="email" id="Email" />
@@ -68,6 +76,22 @@
         </div>
     </form>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    $(document).ready(function () {
+        $("input[type=file]").change(function () {
+            var formData = new FormData();
+            formData.append("picture", $(this).prop('files')[0]);
+            fetch('/api/picture', { method: "POST", body: formData })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (myJson) {
+                    $("#photoBlobInput").val(myJson);
+                });
+        });
+    });
+</script>
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

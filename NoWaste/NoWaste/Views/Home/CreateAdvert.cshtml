@@ -4,13 +4,26 @@
     ViewData["Title"] = "CreateAdvert";
 }
 <script src="~/js/Geocoding.js"></script>
+<!-- /ignore -->
+<!-- INSTRUCTIONS -->
+<!-- 2 CSS files are required: -->
+<!--   * Tag-it's base CSS (jquery.tagit.css). -->
+<!--   * Any theme CSS (either a jQuery UI theme such as "flick", or one that's bundled with Tag-it, e.g. tagit.ui-zendesk.css as in this example.) -->
+<!-- The base CSS and tagit.ui-zendesk.css theme are scoped to the Tag-it widget, so they shouldn't affect anything else in your site, unlike with jQuery UI themes. -->
+<!-- If you want the jQuery UI "flick" theme, you can use this instead, but it's not scoped to just Tag-it like tagit.ui-zendesk is: -->
+<!--   <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css"> -->
+<!-- The real deal -->
+
+<link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css">
+<link href="/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+
 <h2>Create advert</h2>
 
 <h4>Advert</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateAdvert">
+        <form asp-action="Create">
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
@@ -24,7 +37,7 @@
             <div class="form-group">
                 <label asp-for="Picture" class="control-label"></label>
                 <input asp-for="Picture" id="photoBlobInput" class="form-control" type="hidden" />
-                <input type="file" name="Picture" id="Picture"/>
+                <input type="file" id="Picture" />
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,7 +51,7 @@
             <div class="form-group">
                 <label asp-for="KeyWords" class="control-label"></label>
                 <input asp-for="KeyWords" class="form-control" type="hidden" />
-                <input type="text" name="KeyWords" id="KeyWords" class="form-control" />
+                <ul name="KeyWords" id="KeyWords"></ul>
                 <span asp-validation-for="KeyWords" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -47,17 +60,20 @@
         </form>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 <script>
     $(document).ready(function () {
+        $('#KeyWords').tagit();
         $("input[type=file]").change(function () {
             var formData = new FormData();
-            formData.append("picture",$(this).prop('files')[0]);
+            formData.append("picture", $(this).prop('files')[0]);
             fetch('/api/picture', { method: "POST", body: formData })
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (myJson) {
-                    $("#photoBlobInput").text(myJson);
+                    $("#photoBlobInput").val(myJson);
                 });
         });
     });

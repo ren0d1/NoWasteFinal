@@ -35,6 +35,11 @@ namespace NoWaste.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Advert()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

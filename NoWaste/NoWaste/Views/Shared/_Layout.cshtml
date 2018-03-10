@@ -56,16 +56,12 @@
         <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">NoWaste</span>
             <nav class="mdl-navigation">
-            @if (SignInManager.IsSignedIn(User))
-            {
-                <a class="mdl-navigation__link" href=""></a>
-                <a class="mdl-navigation__link" href=""></a>
-            }
-            else
-            {
-                <a class="mdl-navigation__link" href="../Account/Login">Log in</a>
-                <a class="mdl-navigation__link" href="../Account/Register">Register</a>
-            }
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="mdl-navigation__link" href="../Home/Index">Home</a>
+                    <a class="mdl-navigation__link" href="../Home/CreateAdvert">Create Ad</a>
+                }
+                @await Html.PartialAsync("_LoginPartial")
             </nav>
         </div>
         

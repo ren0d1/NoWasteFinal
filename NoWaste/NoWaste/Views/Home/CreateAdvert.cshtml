@@ -7,48 +7,51 @@
 <link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css">
 <link href="/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
 
-<h2>Create advert</h2>
-
-<h4>Advert</h4>
+<h4>New Advert</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="CreateAdvert">
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Picture" class="control-label"></label>
-                <input asp-for="Picture" id="photoBlobInput" class="form-control" type="hidden" />
-                <input type="file" id="Picture" />
+                <input asp-for="Picture" class="form-control" id="photoBlobInput" type="hidden" />
+                <label id="#bb" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                    <i class="material-icons">add_a_photo</i>
+                    <input type="file" name="Picture" id="Picture" />
+                </label>
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" id="adr" class="form-control" onkeyup="AdrChangeHandler()" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+            <div class="mdl-textfield mdl-js-textfield">
+                <label asp-for="Title" class="mdl-textfield__label" for="Title">Title <span asp-validation-for="Title" class="text-danger"></span></label>
+                <input asp-for="Title" class="mdl-textfield__input" type="text" id="Title" />
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <textarea asp-for="Description" class="mdl-textfield__input" type="text" rows="3" id="Description"></textarea>
+                <label asp-for="Description" class="mdl-textfield__label" for="Description">Description<br /><span asp-validation-for="Description" class="text-danger"></span></label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <label asp-for="Address" class="mdl-textfield__label" for="adr">Address <span asp-validation-for="Address" class="text-danger"></span></label>
+                <input asp-for="Address" class="mdl-textfield__input" type="text" onkeyup="AdrChangeHandler()" id="adr" />
             </div>
             <div class="form-group">
                 <input asp-for="Location" id="crdInput" class="form-control" type="hidden" />
             </div>
-            <div class="form-group">
-                <label asp-for="KeyWords" class="control-label"></label>
+            <div class="mdl-textfield mdl-js-textfield">
+                <span asp-validation-for="KeyWords" class="text-danger"></span>
+                <label asp-for="KeyWords" class="mdl-textfield__label" for="KeyWords">KeyWords</label>
                 <input asp-for="KeyWords" class="form-control" type="hidden" />
                 <ul name="KeyWords" id="KeyWords"></ul>
-                <span asp-validation-for="KeyWords" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" />
             </div>
         </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+        <i class="material-icons">arrow_back</i>
+    </a>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
@@ -72,10 +75,3 @@
         })
     });
 </script>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

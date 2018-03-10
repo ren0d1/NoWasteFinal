@@ -6,6 +6,10 @@ body {
     padding-bottom: 20px;
 }
 
+.center {
+    text-align: center;
+}
+
 .page-content {
     padding: 10px;
 }
@@ -26,4 +30,31 @@ external-login {
     width: 50%;
     margin: 0 auto;
     text-align: left;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.add-button {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    background-color: #8bc34a;
+    text-align: center;
+    text-decoration: none;
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    border: 0px; 
+}
+
+.add-button > a,
+.add-button > a:hover,
+.add-button > a:active,
+.add-button > a:focus {
+    text-decoration: none;
+    color: #fff;
 }

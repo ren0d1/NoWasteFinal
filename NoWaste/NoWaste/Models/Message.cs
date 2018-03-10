@@ -9,6 +9,7 @@ namespace NoWaste.Models
 {
     public class Message
     {
+        public int Id { get; set; }
         public Boolean Seen { get; set; }
 
         public DateTime Time { get; set; }

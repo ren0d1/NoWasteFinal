@@ -62,19 +62,14 @@ namespace NoWaste.Controllers
             return null;
         }
 
-        public async Task<IActionResult> Advert()
-        {
-            return View();
-        }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         public IActionResult AdvertDetails(int id)
         {
-            var advert = unitOfWork.Adverts.GetById(id);
-            return View(advert);
+            //var advert = unitOfWork.Adverts.GetById(id);
+            return View(/*advert*/);
         }
     }
 }

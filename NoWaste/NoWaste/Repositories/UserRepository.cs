@@ -15,5 +15,10 @@ namespace NoWaste.Repositories
         {
             return SearchFor(u => u.UserName == name).Result.FirstOrDefault();
         }
+
+        public User GetRandowUser()
+        {
+            return Context.Users.FirstOrDefault();
+        }
     }
 }

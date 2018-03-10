@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using NoWaste.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    /* Afficher liste */
+}
+else
+{
+    @await Html.PartialAsync("../Account/Login")
+}

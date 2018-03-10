@@ -34,15 +34,22 @@
                 <div class="mdl-layout-spacer"></div>
             </div>
         </header>
-        @if (SignInManager.IsSignedIn(User)) {
-            <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">App Settings</span>
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
-                </nav>
-            </div>
-        }
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">NoWaste</span>
+            <nav class="mdl-navigation">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a class="mdl-navigation__link" href=""></a>
+                <a class="mdl-navigation__link" href=""></a>
+            }
+            else
+            {
+                <a class="mdl-navigation__link" href="../Account/Login">Log in</a>
+                <a class="mdl-navigation__link" href="../Account/Register">Register</a>
+            }
+            </nav>
+        </div>
+        
         <main class="mdl-layout__content">
             <div class="page-content">@RenderBody()</div>
         </main>

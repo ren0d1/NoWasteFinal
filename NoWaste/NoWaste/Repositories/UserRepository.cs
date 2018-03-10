@@ -15,5 +15,10 @@ namespace NoWaste.Repositories
         {
             return SearchFor(u => u.UserName == name).Result.FirstOrDefault();
         }
+
+        public virtual async Task<User> GetById(string id)
+        {
+            return await Context.Set<User>().FindAsync(id);
+        }
     }
 }

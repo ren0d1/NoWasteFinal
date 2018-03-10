@@ -8,6 +8,7 @@ using NoWaste.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NoWaste.Controllers
@@ -18,19 +19,21 @@ namespace NoWaste.Controllers
     {
         private readonly IConfiguration configuration;
         private readonly UnitOfWork unitOfWork;
-        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public PictureController(IConfiguration configuration, UnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        public PictureController(IConfiguration configuration, UnitOfWork unitOfWork)
         {
             this.configuration = configuration;
             this.unitOfWork = unitOfWork;
-            this.httpContextAccessor = httpContextAccessor;
         }
 
-        //[HttpPost("{id}")]
         public async Task<String> Post([FromForm]IFormFile picture)
         {
-            var userName = User.Identity.Name ?? Guid.NewGuid().ToString();
+            return await PictureUploader(User.Identity.Name ?? Guid.NewGuid().ToString(), picture);
+        }
+
+        private async Task<string> PictureUploader(string containerName, IFormFile picture){
+            string userName = (User.Identity.Name + DateTime.Now) ?? Guid.NewGuid().ToString();
+
             // Retrieve storage account from connection string.
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
                 configuration.GetConnectionString("BlobStorage"));
@@ -39,19 +42,14 @@ namespace NoWaste.Controllers
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference(userName);
-            await container.CreateIfNotExistsAsync(BlobContainerPublicAccessType.Container,null,null);
+            CloudBlobContainer container = blobClient.GetContainerReference(containerName);
+            await container.CreateIfNotExistsAsync(BlobContainerPublicAccessType.Container, null, null);
 
-            // Retrieve reference to a blob named "myblob".
-            //User user = unitOfWork.Users.GetUserByName(userName);
-            //string photoName = user.Adverts.TakeLast(1).FirstOrDefault().Id.ToString();
-            string photoName = Guid.NewGuid().ToString();
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(photoName);
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(userName);
 
             await blockBlob.UploadFromStreamAsync(picture.OpenReadStream());
-            var test = "https://nowaste.blob.core.windows.net" + "/" + userName + "/" + photoName;
-            return test;
-            return "https://" + httpContextAccessor.HttpContext.Request.Host.ToUriComponent() + "/" + userName + "/ " + photoName;
+
+            return "https://nowaste.blob.core.windows.net" + "/" + containerName + "/" + userName;
         }
     }
 }

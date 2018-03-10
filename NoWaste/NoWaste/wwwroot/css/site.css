@@ -59,3 +59,25 @@ input[type="file"] {
     text-decoration: none;
     color: #fff;
 }
+
+.keywords-label{
+    font-family: Roboto;
+    font-size: 16px;
+    color: #a9a9a9;
+}
+
+#photo-disp {
+    background-color: #a9a9a9;
+    background-image: url('');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 180px;
+    padding: 60px;
+}
+
+.photo-disp .form-group {
+    margin: auto;
+    width: 100px;
+    height: 100px;
+}

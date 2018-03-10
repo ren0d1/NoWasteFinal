@@ -13,8 +13,6 @@ using NoWaste.Services;
 using NoWaste.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
-using NoWaste.Hubs;
-using Microsoft.AspNetCore.Http;
 
 namespace NoWaste
 {
@@ -34,19 +32,19 @@ namespace NoWaste
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>(options =>
-                {
-                    // Password settings
-                    options.Password.RequireDigit = true;
-                    options.Password.RequiredLength = 8;
-                    options.Password.RequiredUniqueChars = 5;
-                    options.Password.RequireLowercase = true;
-                    options.Password.RequireNonAlphanumeric = true;
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequireDigit = true;
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 5;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireDigit = true;
 
-                    //User settings
-                    options.User.RequireUniqueEmail = true;
-                })
+                //User settings
+                options.User.RequireUniqueEmail = true;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -54,6 +52,10 @@ namespace NoWaste
             {
                 facebookOptions.AppId = Configuration.GetSection("Authentication").GetSection("Facebook").GetValue<string>("AppId");
                 facebookOptions.AppSecret = Configuration.GetSection("Authentication").GetSection("Facebook").GetValue<string>("AppSecret");
+                facebookOptions.Fields.Clear();
+                facebookOptions.Fields.Add("email");
+                facebookOptions.Fields.Add("last_name");
+                facebookOptions.Fields.Add("first_name");
             });
 
             services.AddAuthentication().AddTwitter(twitterOptions =>
@@ -77,15 +79,12 @@ namespace NoWaste
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<UnitOfWork, UnitOfWork>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //Enforce SSL
             services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
             });
-
-            services.AddSignalR();
 
             services.AddMvc();
         }
@@ -109,11 +108,6 @@ namespace NoWaste
 
             app.UseStaticFiles();
 
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<MessengerHub>("/messages");
-            });
-
             app.UseAuthentication();
 
             app.UseMvc(routes =>
@@ -122,6 +116,7 @@ namespace NoWaste
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

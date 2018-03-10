@@ -74,8 +74,8 @@ namespace NoWaste.Controllers
         }
         public IActionResult AdvertDetails(int id)
         {
-            //var advert = unitOfWork.Adverts.GetById(id);
-            return View(/*advert*/);
+            var advert = unitOfWork.Adverts.GetById(id);
+            return View(advert);
         }
     }
 }

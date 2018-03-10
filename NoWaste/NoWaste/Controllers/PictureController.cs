@@ -27,9 +27,10 @@ namespace NoWaste.Controllers
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        [HttpPost("{id}")]
-        public async Task<String> Post(int id, [FromForm]IFormFile file)
+        //[HttpPost("{id}")]
+        public async Task<String> Post([FromForm]IFormFile picture)
         {
+            var userName = User.Identity.Name ?? Guid.NewGuid().ToString();
             // Retrieve storage account from connection string.
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
                 configuration.GetConnectionString("BlobStorage"));
@@ -38,17 +39,19 @@ namespace NoWaste.Controllers
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference(id.ToString());
-            await container.CreateIfNotExistsAsync();
+            CloudBlobContainer container = blobClient.GetContainerReference(userName);
+            await container.CreateIfNotExistsAsync(BlobContainerPublicAccessType.Container,null,null);
 
             // Retrieve reference to a blob named "myblob".
-            User user = await unitOfWork.Users.GetById(id);
-            int name = user.Adverts.TakeLast(1).FirstOrDefault().Id;
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(name.ToString());
+            //User user = unitOfWork.Users.GetUserByName(userName);
+            //string photoName = user.Adverts.TakeLast(1).FirstOrDefault().Id.ToString();
+            string photoName = Guid.NewGuid().ToString();
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(photoName);
 
-            await blockBlob.UploadFromStreamAsync(file.OpenReadStream());
-
-            return "https://" + httpContextAccessor.HttpContext.Request.Host.ToUriComponent() + "/" + id.ToString()  + "/ " + name.ToString();
+            await blockBlob.UploadFromStreamAsync(picture.OpenReadStream());
+            var test = "https://nowaste.blob.core.windows.net" + "/" + userName + "/" + photoName;
+            return test;
+            return "https://" + httpContextAccessor.HttpContext.Request.Host.ToUriComponent() + "/" + userName + "/ " + photoName;
         }
     }
 }

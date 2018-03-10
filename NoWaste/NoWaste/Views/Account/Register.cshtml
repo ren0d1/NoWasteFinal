@@ -3,79 +3,70 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>@ViewData["Title"]</h2>
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Account" asp-action="Register" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="LastName"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmailConfirm"></label>
-                <input asp-for="EmailConfirm" class="form-control" />
-                <span asp-validation-for="EmailConfirm" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="BirthDay"></label>
-                <input asp-for="BirthDay" class="form-control" />
-                <span asp-validation-for="BirthDay" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Address"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PostalCode"></label>
-                <input asp-for="PostalCode" class="form-control" />
-                <span asp-validation-for="PostalCode" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Town"></label>
-                <input asp-for="Town" class="form-control" />
-                <span asp-validation-for="Town" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Phone"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Register</button>
-        </form>
-    </div>
+<h3>@ViewData["Title"]</h3>
+<div class="col-md-4">
+    <form asp-controller="Account" asp-action="Register" method="post">
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="FirstName" class="mdl-textfield__label" for="FirstName">FirstName</label>
+            <input asp-for="FirstName" class="mdl-textfield__input" type="text" id="FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="LastName" class="mdl-textfield__label" for="LastName">LastName</label>
+            <input asp-for="LastName" class="mdl-textfield__input" type="text" id="LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="Email" class="mdl-textfield__label" for="Email">Email</label>
+            <input asp-for="Email" class="mdl-textfield__input" type="email" id="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="EmailConfirm" class="mdl-textfield__label" for="EmailConfirm">Email Comfirmation</label>
+            <input asp-for="EmailConfirm" class="mdl-textfield__input" type="email" id="EmailConfirm" />
+            <span asp-validation-for="EmailConfirm" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="Password" class="mdl-textfield__label" for="Password">Password</label>
+            <input asp-for="Password" class="mdl-textfield__input" type="password" id="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="ConfirmPassword" class="mdl-textfield__label" for="ConfirmPassword">Confirm Password</label>
+            <input asp-for="ConfirmPassword" class="mdl-textfield__input" type="password" id="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="BirthDay" class="mdl-textfield__label" for="BirthDay">Birth Date (dd/mm/yyyy)</label>
+            <input asp-for="BirthDay" class="mdl-textfield__input" type="text" id="BirthDay" />
+            <span asp-validation-for="BirthDay" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="Address" class="mdl-textfield__label" for="Address">Address</label>
+            <input asp-for="Address" class="mdl-textfield__input" type="text" id="Address" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="PostalCode" class="mdl-textfield__label" for="PostalCode">Postal Code</label>
+            <input asp-for="PostalCode" class="mdl-textfield__input" type="text" id="PostalCode" />
+            <span asp-validation-for="PostalCode" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="Town" class="mdl-textfield__label" for="Town">Town</label>
+            <input asp-for="Town" class="mdl-textfield__input" type="text" id="Town" />
+            <span asp-validation-for="Town" class="text-danger"></span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <label asp-for="Phone" class="mdl-textfield__label" for="Phone">Phone</label>
+            <input asp-for="Phone" class="mdl-textfield__input" type="text" id="Phone" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                Register
+            </button>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

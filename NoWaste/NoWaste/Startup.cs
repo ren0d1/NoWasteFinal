@@ -14,6 +14,7 @@ using NoWaste.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using NoWaste.Hubs;
+using Microsoft.AspNetCore.Http;
 
 namespace NoWaste
 {
@@ -76,6 +77,7 @@ namespace NoWaste
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<UnitOfWork, UnitOfWork>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //Enforce SSL
             services.Configure<MvcOptions>(options =>

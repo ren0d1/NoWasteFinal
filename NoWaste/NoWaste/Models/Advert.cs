@@ -25,13 +25,13 @@ namespace NoWaste.Models
         public String Picture { get; set; } //Ref name for blob storage
         [Required]
         public String Address { get; set; }
-        [NotMapped]
+        //[NotMapped]
         public DateTime Date { get; set; }
         [Required]
         [Display(Name = "Key words")]
         public String KeyWords { get; set; }
         public String Location { get; set; }
-        [NotMapped]
+        //[NotMapped]
         public Boolean IsVisible { get; set; }
     }
 }

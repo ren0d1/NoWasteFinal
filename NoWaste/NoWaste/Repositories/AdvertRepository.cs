@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using NoWaste.Models;
-using NoWaste.Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,14 +12,11 @@ namespace NoWaste.Repositories
     {
         public AdvertRepository(ApplicationDbContext context) : base(context)
         {
-
         }
-        public List<Advert> GetAdvertsInUserRange(GPSCoord userCoord)
+
+        public async Task<Advert> GetWithUserById(int Id)
         {
-            userCoord.Lat = userCoord.Lat / 10000000;
-            userCoord.Lng = userCoord.Lng / 10000000;
-            var advInRange = Context.Adverts.Include(a => a.Owner).Where(a => GpsHelper.GetDistanceBetweenCorrds(userCoord, JsonConvert.DeserializeObject<GPSCoord>(a.Location)) < 5).ToList();
-            return advInRange;
+            return await Context.Adverts.Include(a => a.Owner).FirstOrDefaultAsync(a => a.Id == Id);
         }
     }
 }

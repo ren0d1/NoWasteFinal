@@ -61,16 +61,17 @@
                 {
                     <a class="mdl-navigation__link" href="/Home/Index/">Home</a>
                     <a class="mdl-navigation__link" href="/Home/CreateAdvert">Create Ad</a>
+                    <a class="mdl-navigation__link" href="/Home/MyAdverts">My Ads</a>
                 }
                 @await Html.PartialAsync("_LoginPartial")
             </nav>
         </div>
-        
+
         <main class="mdl-layout__content">
             <div class="page-content">@RenderBody()</div>
         </main>
     </div>
-    
+
 
     @RenderSection("Scripts", required: false)
 </body>

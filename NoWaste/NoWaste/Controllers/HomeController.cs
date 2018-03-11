@@ -25,9 +25,9 @@ namespace NoWaste.Controllers
              for (int i = 0; i < 5; i++)
              {
                  Advert a = new Advert();
-                 a.Title = "Test" + i;
-                 a.Description = "AAAAAA AAAAAAA AAAAAA AAAAA AAAAAA AAAAAAA AAAAAAAA AAAAAA AAAAAAAA AAAAAAAAAA AAAAAAAAA";
-                 a.Picture = "http://www.bricotheque-chalon.fr/wp-content/uploads/2016/10/Vélo-rose.png"; /*DevSkim: ignore DS137138*/
+                 a.Title = "Jambon";
+                 a.Description = "500g de jambon";
+                 a.Picture = "https://upload.wikimedia.org/wikipedia/commons/7/74/Jambon_%C3%A0_la_californienne.jpg"; /*DevSkim: ignore DS137138*/
                  l.Add(a);
              }
              return View(new AdvertListViewModel()

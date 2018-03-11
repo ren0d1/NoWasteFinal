@@ -4,5 +4,38 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>RequestMade</h2>
+<h4>Your requests</h4>
+
+<!-- List items with avatar and action -->
+<style>
+    .list-request {
+        width: 300px;
+    }
+</style>
+
+<div class="list-request mdl-list">
+    <div class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-avatar">person</i>
+            <span>Jambon</span>
+        </span>
+        <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">keyboard_arrow_right</i></a>
+    </div>
+    <div class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-avatar">person</i>
+            <span>Table</span>
+        </span>
+        <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">keyboard_arrow_right</i></a>
+    </div>
+    <div class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-avatar">person</i>
+            <span>Tomates</span>
+        </span>
+        <span class="mdl-list__item-secondary-content">
+            <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">keyboard_arrow_right</i></a>
+        </span>
+    </div>
+</div>
 

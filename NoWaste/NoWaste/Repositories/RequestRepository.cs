@@ -25,5 +25,21 @@ namespace NoWaste.Repositories
 
             return requests;
         }
+
+        public void AddRequest(Request request)
+        {
+            Add(request);
+        }
+
+        public void AcceptRequest(int advertId, string userId)
+        {
+            Context.Requests.Where(r => r.AdvertId == advertId && r.UserId == userId).FirstOrDefault().IsAcquitted = true;
+            Context.Requests.Where(r => r.AdvertId == advertId && userId != r.UserId).ForEachAsync(r => DeleteRequest(r.AdvertId, r.UserId));
+        }
+
+        public void DeleteRequest(int advertId, string userId)
+        {
+            Delete(Context.Requests.Where(r => r.AdvertId == advertId && r.UserId == userId).FirstOrDefault());
+        }
     }
 }

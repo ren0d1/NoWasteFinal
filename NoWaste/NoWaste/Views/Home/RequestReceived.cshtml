@@ -1,4 +1,4 @@
-﻿
+﻿@model List<NoWaste.Models.HomeViewModels.RequestViewModel>
 @{
     ViewData["Title"] = "RequestReceived";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,23 +13,26 @@
 </style>
 
 <div class="list-request mdl-list">
-    <div class="request">
-        <div class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-avatar">person</i>
-                <span>Tom</span>
-            </span>
-            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="">
-                <i class="material-icons">check</i>
-            </a>
-            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="">
-                <i class="material-icons">close</i>
-            </a>
+    @foreach (var r in Model)
+    {
+        <div class="request">
+            <div class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-avatar">person</i>
+                    <span>@r.User.FirstName</span>
+                </span>                
+                <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/Home/AcceptRequest?AdvertId=@r.Request.AdvertId&UserId=@r.Request.UserId">
+                    <i class="material-icons">check</i>
+                </a>
+                <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="/Home/RefuseRequest?AdvertId=@r.Request.AdvertId&UserId=@r.Request.UserId">
+                    <i class="material-icons">close</i>
+                </a>
+            </div>
+            <div class="mdl-list__item">
+                @r.Advert.Title
+            </div>
         </div>
-        <div class="mdl-list__item">
-            Jambon
-        </div>
-    </div>
+    }
     <div class="request">
         <div class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
@@ -61,7 +64,7 @@
             </a>
         </div>
         <div class="mdl-list__item">
-           500g de tomates
+            500g de tomates
         </div>
     </div>
 </div>

@@ -97,6 +97,27 @@ namespace NoWaste.Controllers
             return View();
         }
 
+        public IActionResult RequestAdvert(int id)
+        {
+            unitOfWork.Request.Add(new Request { AdvertId = id, UserId = unitOfWork.Users.GetUserByName(User.Identity.Name).Id });
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> AcceptRequest(int advertId, string userId)
+        {
+            unitOfWork.Request.AcceptRequest(advertId, userId);
+            await unitOfWork.SaveChangesAsync();
+
+            return RedirectToAction("RequestReceived");
+        }
+        public async Task<IActionResult> RefuseRequest(int advertId, string userId)
+        {
+            unitOfWork.Request.DeleteRequest(advertId, userId);
+            await unitOfWork.SaveChangesAsync();
+
+            return RedirectToAction("RequestReceived");
+        }
+
 
         public IActionResult Error()
         {

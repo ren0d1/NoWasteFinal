@@ -1,25 +1,37 @@
-﻿@model NoWaste.Models.Advert;
+﻿@model NoWaste.Models.Advert
 @{
     ViewData["Title"] = "AdvertDetails";
 }
-<div class="advert-photo">
-    <h2>Photo</h2>
+<div id="photo-disp">
 </div>
+<h3>
+    @Model.Title
+</h3>
 <p>
-    Title
-</p>
-<p>
-    Description
+    @Model.Description
 </p>
 <div class="center">
     <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
         I want it
     </a>
 </div>
-<p>
-    Username
-</p>
-<p>
-    *******
-</p>
+<div class="user-section">
+    <p>
+        Offred by <b>@Model.Owner.FirstName @Model.Owner.LastName</b>
+    </p>
+    <p>
+        *******
+    </p>
+</div>
+
+<div>
+    <a asp-action="Index" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+        <i class="material-icons">arrow_back</i>
+    </a>
+</div>
+<script>
+    $(document).ready(function () {
+        document.getElementById('photo-disp').style.backgroundImage = "url(@Model.Picture)";
+    });
+</script>
 

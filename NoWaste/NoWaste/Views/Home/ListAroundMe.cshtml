@@ -1,15 +1,9 @@
-﻿@using Microsoft.AspNetCore.Identity;
-@using NoWaste.Models.HomeViewModels
+﻿@using NoWaste.Models.HomeViewModels
 @model List<Advert>
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Around me";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@if (SignInManager.IsSignedIn(User))
-{
     <button class="add-button">
         <a href="../Home/CreateAdvert">
             <i class="material-icons">add</i>
@@ -43,9 +37,3 @@
             @Html.Partial("AdvertItem", adv);
         }
     </div>
-
-}
-else
-{
-    @await Html.PartialAsync("./_Landing", new LoginViewModel());
-}

@@ -20,21 +20,6 @@ namespace NoWaste.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            /*List<Advert> l = new List<Advert>();
-
-            for (int i = 0; i < 5; i++)
-            {
-                Advert a = new Advert();
-                a.Title = "Test" + i;
-                a.Description = "AAAAAA AAAAAAA AAAAAA AAAAA AAAAAA AAAAAAA AAAAAAAA AAAAAA AAAAAAAA AAAAAAAAAA AAAAAAAAA";
-                a.Picture = "http://www.bricotheque-chalon.fr/wp-content/uploads/2016/10/Vélo-rose.png";
-                l.Add(a);
-            }
-            return View(new AdvertListViewModel()
-            {
-                List = l
-            });
-            */
             var adverts = await unitOfWork.Adverts.GetAllAsync();
             return View(adverts);
         }
@@ -65,7 +50,7 @@ namespace NoWaste.Controllers
                 return RedirectToAction("Error");
             var user = unitOfWork.Users.GetUserByName(User.Identity.Name);
             advert.Owner = user;
-            advert.Date = new DateTime(2000,12,01);
+            //advert.Date = new DateTime(2000,12,01);
             await unitOfWork.Adverts.Add(advert);
             await unitOfWork.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -74,9 +59,15 @@ namespace NoWaste.Controllers
         {
             return View();
         }
-        public IActionResult GetAdvertsInUserRange(GPSCoord userPos)
+        public IActionResult ListAroundMe(string Lat, string Lng)
         {
-            return View("Index", unitOfWork.Adverts.GetAdvertsInUserRange(userPos));
+            GPSCoord userCoord = new GPSCoord()
+            {
+                Lat = double.Parse(Lat, System.Globalization.CultureInfo.InvariantCulture),
+                Lng = double.Parse(Lng, System.Globalization.CultureInfo.InvariantCulture)
+            };
+            var adv = unitOfWork.Adverts.GetAdvertsInUserRange(userCoord);
+            ed return View(adv);
         }
         public IActionResult Error()
         {

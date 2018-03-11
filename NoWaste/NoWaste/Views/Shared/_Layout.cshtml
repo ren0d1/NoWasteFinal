@@ -7,6 +7,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script>
+        function goListAroundMe() {
+            console.log("called");
+            navigator.geolocation.getCurrentPosition(function (position) {
+                document.location.href = "/Home/ListAroundMe?Lat=" + position.coords.latitude + "&Lng=" + position.coords.longitude;
+                /*var request = $.ajax({
+                    url: "/Home/ListAroundMe",
+                    method: "GET",
+                    data: {
+                        Lat: JSON.stringify(position.coords.latitude),
+                        Lng: JSON.stringify(position.coords.longitude)
+                    }
+                });*/
+            });
+        }
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - NoWaste</title>
@@ -61,6 +77,7 @@
                 {
                     <a class="mdl-navigation__link" href="/Home/Index/">Home</a>
                     <a class="mdl-navigation__link" href="/Home/CreateAdvert">Create Ad</a>
+                    <a class="mdl-navigation__link" onclick="goListAroundMe()">Get Advert Arround Me</a>
                 }
                 @await Html.PartialAsync("_LoginPartial")
             </nav>
@@ -75,3 +92,4 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+

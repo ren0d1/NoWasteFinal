@@ -18,6 +18,8 @@ namespace NoWaste.Models.AccountViewModels
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "The last name can only be composed of non-numeric characters.")]
         public string LastName { get; set; }
 
+        public String Photo { get; set; } //Ref name for blob storage
+
         [Required]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]

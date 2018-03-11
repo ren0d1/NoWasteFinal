@@ -21,7 +21,7 @@
         }
 
         .demo-card-square.mdl-card {
-            width: 240px;
+            width: 320px;
             text-align: left;
             display: inline-block;
             padding: 2px;
@@ -47,7 +47,7 @@
 }
 else
 {
-    @await Html.PartialAsync("../Account/Login", new LoginViewModel());
+    @await Html.PartialAsync("./_Landing", new LoginViewModel());
 }
 <script>
     navigator.geolocation.getCurrentPosition(function (position) {

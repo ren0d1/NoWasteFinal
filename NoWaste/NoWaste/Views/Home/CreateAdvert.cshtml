@@ -7,18 +7,20 @@
 <link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css">
 <link href="/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
 
-<h4>New Advert</h4>
-<hr />
+<h5>New Advert</h5>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateAdvert">
-            <div class="form-group">
-                <input asp-for="Picture" class="form-control" id="photoBlobInput" type="hidden" />
-                <label id="#bb" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-                    <i class="material-icons">add_a_photo</i>
-                    <input type="file" name="Picture" id="Picture" />
-                </label>
-                <span asp-validation-for="Picture" class="text-danger"></span>
+        <form asp-action="Create">
+            <div id="photo-disp">
+                <div class="form-group">
+                    <input asp-for="Picture" class="form-control" id="photoBlobInput" type="hidden" />
+                    <label id="#bb" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                        <i class="material-icons">add_a_photo</i>
+                        <input type="file" name="Picture" id="Picture" onchange="readURL(this);" />
+                    </label>
+                    <img id="photo-display" src="#" alt="" />
+                    <span asp-validation-for="Picture" class="text-danger"></span>
+                </div>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
                 <label asp-for="Title" class="mdl-textfield__label" for="Title">Title <span asp-validation-for="Title" class="text-danger"></span></label>
@@ -37,7 +39,7 @@
             </div>
             <div class="mdl-textfield mdl-js-textfield">
                 <span asp-validation-for="KeyWords" class="text-danger"></span>
-                <label asp-for="KeyWords" class="mdl-textfield__label" for="KeyWords">KeyWords</label>
+                <p class="keywords-label">Key Words</p>
                 <input asp-for="KeyWords" class="form-control" type="hidden" />
                 <ul name="KeyWords" id="KeyWords"></ul>
             </div>
@@ -74,4 +76,18 @@
 
         })
     });
+</script>
+<script>
+    document.getElementById('Picture').addEventListener('change', readURL, true);
+    function readURL() {
+        var file = document.getElementById("Picture").files[0];
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            document.getElementById('photo-disp').style.backgroundImage = "url(" + reader.result + ")";
+        }
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+        }
+    }
 </script>

@@ -75,10 +75,14 @@ namespace NoWaste.Controllers
 
         public IActionResult RequestMade()
         {
+            var user = unitOfWork.Users.GetUserByName(User.Identity.Name);
+            var requests = unitOfWork.Request.GetRequestByUser(user.Id);
             return View();
         }
         public IActionResult RequestReceived()
         {
+            var user = unitOfWork.Users.GetUserByName(User.Identity.Name);
+            var requests = unitOfWork.Request.GetRequestFromUserAdvert(user.Id);
             return View();
         }
 

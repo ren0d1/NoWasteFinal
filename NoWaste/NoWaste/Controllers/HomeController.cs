@@ -61,17 +61,15 @@ namespace NoWaste.Controllers
 
         public async Task<IActionResult> Create(Advert advert)
         {
-            if (User.Identity.Name != null)
-            {
-                var user = unitOfWork.Users.GetUserByName(User.Identity.Name);
-                advert.Owner = user;
-                await unitOfWork.Adverts.Add(advert);
-                await unitOfWork.SaveChangesAsync();
-                return RedirectToAction("/Home/Index");
-            }
-            return RedirectToAction("Error");
+            if (User.Identity.Name == null)
+                return RedirectToAction("Error");
+            var user = unitOfWork.Users.GetUserByName(User.Identity.Name);
+            advert.Owner = user;
+            advert.Date = new DateTime(2000,12,01);
+            await unitOfWork.Adverts.Add(advert);
+            await unitOfWork.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
-
         public async Task<IActionResult> Advert()
         {
             return View();

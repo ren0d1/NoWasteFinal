@@ -12,7 +12,7 @@ namespace NoWaste.Models
         public int Id { get; set; }
 
         //String is default id type for IdentityUser
-        [NotMapped]
+        //[NotMapped]
         public User Owner { get; set; }
 
         [Required]

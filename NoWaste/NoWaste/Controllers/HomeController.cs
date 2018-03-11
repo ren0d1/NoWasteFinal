@@ -18,22 +18,25 @@ namespace NoWaste.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-             List<Advert> l = new List<Advert>();
+            /*List<Advert> l = new List<Advert>();
 
-             for (int i = 0; i < 5; i++)
-             {
-                 Advert a = new Advert();
-                 a.Title = "Test" + i;
-                 a.Description = "AAAAAA AAAAAAA AAAAAA AAAAA AAAAAA AAAAAAA AAAAAAAA AAAAAA AAAAAAAA AAAAAAAAAA AAAAAAAAA";
-                 a.Picture = "http://www.bricotheque-chalon.fr/wp-content/uploads/2016/10/Vélo-rose.png";
-                 l.Add(a);
-             }
-             return View(new AdvertListViewModel()
-             {
-                 List = l
-             });
+            for (int i = 0; i < 5; i++)
+            {
+                Advert a = new Advert();
+                a.Title = "Test" + i;
+                a.Description = "AAAAAA AAAAAAA AAAAAA AAAAA AAAAAA AAAAAAA AAAAAAAA AAAAAA AAAAAAAA AAAAAAAAAA AAAAAAAAA";
+                a.Picture = "http://www.bricotheque-chalon.fr/wp-content/uploads/2016/10/Vélo-rose.png";
+                l.Add(a);
+            }
+            return View(new AdvertListViewModel()
+            {
+                List = l
+            });
+            */
+            var adverts = await unitOfWork.Adverts.GetAllAsync();
+            return View(adverts);
         }
 
         public IActionResult About()
@@ -73,7 +76,10 @@ namespace NoWaste.Controllers
         {
             return View();
         }
-
+        public IActionResult GetAdvertsInUserRange(GPSCoord userPos)
+        {
+            return View("Index", unitOfWork.Adverts.GetAdvertsInUserRange(userPos));
+        }
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

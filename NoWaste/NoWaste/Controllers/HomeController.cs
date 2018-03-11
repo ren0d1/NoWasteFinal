@@ -18,18 +18,19 @@ namespace NoWaste.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
              List<Advert> l = new List<Advert>();
 
-             for (int i = 0; i < 5; i++)
-             {
-                 Advert a = new Advert();
-                 a.Title = "Jambon";
-                 a.Description = "500g de jambon";
-                 a.Picture = "https://upload.wikimedia.org/wikipedia/commons/7/74/Jambon_%C3%A0_la_californienne.jpg"; /*DevSkim: ignore DS137138*/
-                 l.Add(a);
-             }
+            /*for (int i = 0; i < 5; i++)
+            {
+                Advert a = new Advert();
+                a.Title = "Jambon";
+                a.Description = "500g de jambon";
+                a.Picture = "https://upload.wikimedia.org/wikipedia/commons/7/74/Jambon_%C3%A0_la_californienne.jpg"; 
+                l.Add(a);
+            }*/
+            l = await unitOfWork.Adverts.GetAllAsync();
              return View(new AdvertListViewModel()
              {
                  List = l

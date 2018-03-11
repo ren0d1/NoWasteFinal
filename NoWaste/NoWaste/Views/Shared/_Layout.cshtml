@@ -7,6 +7,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script>
+        function goListAroundMe() {
+            console.log("called");
+            navigator.geolocation.getCurrentPosition(function (position) {
+                document.location.href = "/Home/ListAroundMe?Lat=" + position.coords.latitude + "&Lng=" + position.coords.longitude;
+            });
+        }
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - NoWaste</title>
@@ -63,6 +71,7 @@
             <a class="mdl-navigation__link" href="/Home/RequestMade">My Requests</a>
             <a class="mdl-navigation__link" href="/Home/MyAdverts">My Ads</a>
             <a class="mdl-navigation__link" href="/Home/RequestReceived">Request Received</a>
+            <a class="mdl-navigation__link" onclick="goListAroundMe()">Get Advert Arround Me</a>
 }
                 @await Html.PartialAsync("_LoginPartial")
             </nav>

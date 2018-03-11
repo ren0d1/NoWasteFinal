@@ -128,5 +128,15 @@ namespace NoWaste.Controllers
             var advert = await unitOfWork.Adverts.GetWithUserById(id);
             return View(advert);
         }
+        public IActionResult ListAroundMe(string Lat, string Lng)
+        {
+            GPSCoord userCoord = new GPSCoord()
+            {
+                Lat = double.Parse(Lat, System.Globalization.CultureInfo.InvariantCulture),
+                Lng = double.Parse(Lng, System.Globalization.CultureInfo.InvariantCulture)
+            };
+            var adv = unitOfWork.Adverts.GetAdvertsInUserRange(userCoord);
+            return View(new AdvertListViewModel { List=adv});
+        }
     }
 }

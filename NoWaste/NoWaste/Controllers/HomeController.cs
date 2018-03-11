@@ -77,9 +77,9 @@ namespace NoWaste.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult AdvertDetails(int id)
+        public async Task<IActionResult> AdvertDetails(int id)
         {
-            var advert = unitOfWork.Adverts.GetById(id);
+            var advert = await unitOfWork.Adverts.GetWithUserById(id);
             return View(advert);
         }
     }

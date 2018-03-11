@@ -18,5 +18,10 @@ namespace NoWaste.Repositories
         {
             return await Context.Adverts.Include(a => a.Owner).FirstOrDefaultAsync(a => a.Id == Id);
         }
+
+        public async Task<List<Advert>> GetAdvertsByUser(string id)
+        {
+            return await Context.Adverts.Include(a => a.Owner).Where(a=>a.Owner.Id == id).ToListAsync();
+        }
     }
 }

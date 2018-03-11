@@ -1,0 +1,15 @@
+﻿@using NoWaste.Models.HomeViewModels
+@model AdvertListViewModel
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div style="width:100%; text-align:center" ;>
+        @foreach (Advert adv in Model.List)
+        {
+            @Html.Partial("AdvertItem", adv);
+        }
+    </div>
+}

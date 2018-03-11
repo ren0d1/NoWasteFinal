@@ -55,13 +55,13 @@
             </div>
         </header>
         <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">NoWaste</span>
+            <img src="~/images/Logo_NO_WASTE_Blue.png" width="30%" />
             <nav class="mdl-navigation">
                 @if (SignInManager.IsSignedIn(User))
-                {
-                    <a class="mdl-navigation__link" href="/Home/Index/">Home</a>
-                    <a class="mdl-navigation__link" href="/Home/CreateAdvert">Create Ad</a>
-                }
+        {
+            <a class="mdl-navigation__link" href="/Home/Index/">Home</a>
+            <a class="mdl-navigation__link" href="/Home/CreateAdvert">Create Ad</a>
+}
                 @await Html.PartialAsync("_LoginPartial")
             </nav>
         </div>

@@ -7,22 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
-        function goListAroundMe() {
-            console.log("called");
-            navigator.geolocation.getCurrentPosition(function (position) {
-                document.location.href = "/Home/ListAroundMe?Lat=" + position.coords.latitude + "&Lng=" + position.coords.longitude;
-                /*var request = $.ajax({
-                    url: "/Home/ListAroundMe",
-                    method: "GET",
-                    data: {
-                        Lat: JSON.stringify(position.coords.latitude),
-                        Lng: JSON.stringify(position.coords.longitude)
-                    }
-                });*/
-            });
-        }
-    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - NoWaste</title>
@@ -71,14 +55,15 @@
             </div>
         </header>
         <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">NoWaste</span>
+            <img src="~/images/Logo_NO_WASTE_Blue.png" width="30%" />
             <nav class="mdl-navigation">
                 @if (SignInManager.IsSignedIn(User))
-                {
-                    <a class="mdl-navigation__link" href="/Home/Index/">Home</a>
-                    <a class="mdl-navigation__link" href="/Home/CreateAdvert">Create Ad</a>
-                    <a class="mdl-navigation__link" onclick="goListAroundMe()">Get Advert Arround Me</a>
-                }
+    {
+            <a class="mdl-navigation__link" href="/Home/Index">Home</a>
+            <a class="mdl-navigation__link" href="/Home/RequestMade">My Requests</a>
+            <a class="mdl-navigation__link" href="/Home/MyAdverts">My Ads</a>
+            <a class="mdl-navigation__link" href="/Home/RequestReceived">Request Received</a>
+}
                 @await Html.PartialAsync("_LoginPartial")
             </nav>
         </div>
@@ -92,4 +77,3 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-

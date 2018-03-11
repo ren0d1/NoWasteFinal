@@ -18,10 +18,22 @@ namespace NoWaste.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var adverts = await unitOfWork.Adverts.GetAllAsync();
-            return View(adverts);
+             List<Advert> l = new List<Advert>();
+
+             for (int i = 0; i < 5; i++)
+             {
+                 Advert a = new Advert();
+                 a.Title = "Jambon";
+                 a.Description = "500g de jambon";
+                 a.Picture = "https://upload.wikimedia.org/wikipedia/commons/7/74/Jambon_%C3%A0_la_californienne.jpg"; /*DevSkim: ignore DS137138*/
+                 l.Add(a);
+             }
+             return View(new AdvertListViewModel()
+             {
+                 List = l
+             });
         }
 
         public IActionResult About()
@@ -38,8 +50,8 @@ namespace NoWaste.Controllers
             return View();
         }
 
-        
-        public async Task<IActionResult> CreateAdvert()
+
+        public IActionResult CreateAdvert()
         {
             return View();
         }
@@ -48,27 +60,40 @@ namespace NoWaste.Controllers
         {
             if (User.Identity.Name == null)
                 return RedirectToAction("Error");
-            var user = unitOfWork.Users.GetUserByName(User.Identity.Name);
+
+            var user =  unitOfWork.Users.GetUserByName(User.Identity.Name);
             advert.Owner = user;
-            //advert.Date = new DateTime(2000,12,01);
             await unitOfWork.Adverts.Add(advert);
             await unitOfWork.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Advert()
+
+        public IActionResult Advert()
         {
             return View();
         }
-        public IActionResult ListAroundMe(string Lat, string Lng)
+
+        public async Task<IActionResult> MyAdverts()
         {
-            GPSCoord userCoord = new GPSCoord()
+            string userId = unitOfWork.Users.GetUserByName(User.Identity.Name).Id;
+            List<Advert> l = await unitOfWork.Adverts.GetAdvertsByUser(userId);
+
+            return View(new AdvertListViewModel()
             {
-                Lat = double.Parse(Lat, System.Globalization.CultureInfo.InvariantCulture),
-                Lng = double.Parse(Lng, System.Globalization.CultureInfo.InvariantCulture)
-            };
-            var adv = unitOfWork.Adverts.GetAdvertsInUserRange(userCoord);
-            return View(adv);
+                List = l
+            });
         }
+
+        public IActionResult RequestMade()
+        {
+            return View();
+        }
+        public IActionResult RequestReceived()
+        {
+            return View();
+        }
+
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

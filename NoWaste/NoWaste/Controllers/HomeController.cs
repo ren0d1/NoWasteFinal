@@ -18,7 +18,7 @@ namespace NoWaste.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
              List<Advert> l = new List<Advert>();
 
@@ -30,10 +30,17 @@ namespace NoWaste.Controllers
                  a.Picture = "https://upload.wikimedia.org/wikipedia/commons/7/74/Jambon_%C3%A0_la_californienne.jpg"; /*DevSkim: ignore DS137138*/
                  l.Add(a);
              }
-             return View(new AdvertListViewModel()
-             {
-                 List = l
-             });
+             if(User.Identity.Name != null)
+            {
+                var user = unitOfWork.Users.GetUserByName(User.Identity.Name);
+                var adverts = await unitOfWork.Adverts.GetAdvertsByUser(user.Id);
+                return View(new AdvertListViewModel { List = adverts });
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         public IActionResult About()
@@ -84,22 +91,38 @@ namespace NoWaste.Controllers
             });
         }
 
-        public IActionResult RequestMade()
+        public async Task<IActionResult> RequestMade()
         {
             var user = unitOfWork.Users.GetUserByName(User.Identity.Name);
             var requests = unitOfWork.Request.GetRequestByUser(user.Id);
-            return View();
+            List<RequestViewModel> vm = new List<RequestViewModel>();
+            requests.ForEach(r => vm.Add(new RequestViewModel
+            {
+                Request = r,
+                User = unitOfWork.Users.GetById(r.UserId),
+                Advert = unitOfWork.Adverts.GetById(r.AdvertId).Result
+            }));
+            return View(vm);
         }
         public IActionResult RequestReceived()
         {
             var user = unitOfWork.Users.GetUserByName(User.Identity.Name);
             var requests = unitOfWork.Request.GetRequestFromUserAdvert(user.Id);
-            return View();
+            List<RequestViewModel> vm = new List<RequestViewModel>();
+            requests.ForEach(r => vm.Add(new RequestViewModel
+            {
+                Request = r,
+                User = unitOfWork.Users.GetById(r.UserId),
+                Advert = unitOfWork.Adverts.GetById(r.AdvertId).Result
+
+            }));
+            return View(vm);
         }
 
-        public IActionResult RequestAdvert(int id)
+        public async Task<IActionResult> RequestAdvert(int id)
         {
-            unitOfWork.Request.Add(new Request { AdvertId = id, UserId = unitOfWork.Users.GetUserByName(User.Identity.Name).Id });
+            await unitOfWork.Request.Add(new Request { AdvertId = id, UserId = unitOfWork.Users.GetUserByName(User.Identity.Name).Id });
+            await unitOfWork.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

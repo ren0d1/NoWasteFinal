@@ -22,24 +22,15 @@
                 <span>@r.Advert.Title</span>
             </span>
             <a class="mdl-list__item-secondary-action" href="/Home/AdvertDetails/@r.Request.AdvertId"><i class="material-icons">keyboard_arrow_right</i></a>
+            @if (r.Request.IsAcquitted)
+            {
+                <span>Accepted</span>
+            }
+            else
+            {
+                <span>Pending...</span>
+            }
         </div>
     }
-
-    <div class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-avatar">person</i>
-            <span>Table</span>
-        </span>
-        <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">keyboard_arrow_right</i></a>
-    </div>
-    <div class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-avatar">person</i>
-            <span>Tomates</span>
-        </span>
-        <span class="mdl-list__item-secondary-content">
-            <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">keyboard_arrow_right</i></a>
-        </span>
-    </div>
 </div>
 

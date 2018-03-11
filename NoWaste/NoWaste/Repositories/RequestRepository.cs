@@ -21,7 +21,7 @@ namespace NoWaste.Repositories
         public List<Request> GetRequestFromUserAdvert(string userId)
         {
             var adverts = Context.Adverts.Include(a => a.Owner).Where(a => a.Owner.Id == userId).Select(a=>a.Id).ToList();
-            var requests = Context.Requests.Where(r => adverts.Contains(r.AdvertId)).ToList();
+            var requests = Context.Requests.Where(r => adverts.Contains(r.AdvertId) && r.IsAcquitted == false).ToList();
 
             return requests;
         }
@@ -34,12 +34,12 @@ namespace NoWaste.Repositories
         public void AcceptRequest(int advertId, string userId)
         {
             Context.Requests.Where(r => r.AdvertId == advertId && r.UserId == userId).FirstOrDefault().IsAcquitted = true;
-            Context.Requests.Where(r => r.AdvertId == advertId && userId != r.UserId).ForEachAsync(r => DeleteRequest(r.AdvertId, r.UserId));
+            Context.Requests.Where(r => r.AdvertId == advertId && userId != r.UserId).ForEachAsync(r => DeleteRequest(r.AdvertId, r.UserId).Wait()).ToString();
         }
 
-        public void DeleteRequest(int advertId, string userId)
+        public async Task DeleteRequest(int advertId, string userId)
         {
-            Delete(Context.Requests.Where(r => r.AdvertId == advertId && r.UserId == userId).FirstOrDefault());
+            await Delete(Context.Requests.Where(r => r.AdvertId == advertId && r.UserId == userId).FirstOrDefault());
         }
     }
 }

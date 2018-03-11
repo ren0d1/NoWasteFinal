@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "AdvertDetails";
 }
-<div id="photo-disp">
+<div id="photo-disp" style="background-image: url('@Model.Picture'); background-size: cover;">
 </div>
 <h3>
     @Model.Title
@@ -25,13 +25,16 @@
 </div>
 
 <div>
-    <a asp-action="Index" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+    <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" onclick="GoBack();">
         <i class="material-icons">arrow_back</i>
     </a>
 </div>
 <script>
     $(document).ready(function () {
-        document.getElementById('photo-disp').style.backgroundImage = "url(@Model.Picture)";
+        document.getElementById('photo-disp').style.backgroundImage = "url(@Model.Picture)";        
     });
+    function GoBack() {
+        window.location.href = document.referrer;
+    }
 </script>
 

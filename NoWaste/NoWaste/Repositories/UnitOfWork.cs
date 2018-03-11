@@ -12,6 +12,7 @@ namespace NoWaste.Repositories
         private AdvertRepository advertRepository;
         private MessageRepository messageRepository;
         private UserRepository userRepository;
+        private RequestRepository requestRepository;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -23,6 +24,8 @@ namespace NoWaste.Repositories
         public MessageRepository Messages => messageRepository ?? (messageRepository = new MessageRepository(context));
 
         public UserRepository Users => userRepository ?? (userRepository = new UserRepository(context));
+
+        public RequestRepository Request => requestRepository ?? (requestRepository = new RequestRepository(context));
 
         public async Task SaveChangesAsync()
         {

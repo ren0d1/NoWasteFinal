@@ -73,6 +73,17 @@ namespace NoWaste.Controllers
             return View();
         }
 
+        public async Task<IActionResult> MyAdverts()
+        {
+            string userId = unitOfWork.Users.GetUserByName(User.Identity.Name).Id;
+            List<Advert> l = await unitOfWork.Adverts.GetAdvertsByUser(userId);
+
+            return View(new AdvertListViewModel()
+            {
+                List = l
+            });
+        }
+
         public IActionResult RequestMade()
         {
             return View();

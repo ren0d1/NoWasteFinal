@@ -67,7 +67,7 @@ namespace NoWaste.Controllers
                 Lng = double.Parse(Lng, System.Globalization.CultureInfo.InvariantCulture)
             };
             var adv = unitOfWork.Adverts.GetAdvertsInUserRange(userCoord);
-            ed return View(adv);
+            return View(adv);
         }
         public IActionResult Error()
         {

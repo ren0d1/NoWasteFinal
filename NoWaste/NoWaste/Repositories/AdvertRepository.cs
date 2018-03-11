@@ -27,5 +27,9 @@ namespace NoWaste.Repositories
             Console.WriteLine(advInRange);
             return advInRange;
         }
+        public async Task<List<Advert>> GetAdvertsByUser(string id)
+        {
+            return await Context.Adverts.Include(a => a.Owner).Where(a => a.Owner.Id == id).ToListAsync();
+        }
     }
 }

@@ -1,39 +1,39 @@
 ﻿@using NoWaste.Models.HomeViewModels
-@model List<Advert>
+@model AdvertListViewModel;
 @{
     ViewData["Title"] = "Around me";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <button class="add-button">
-        <a href="../Home/CreateAdvert">
-            <i class="material-icons">add</i>
-        </a>
-    </button>
-    <style>
-        a:hover, a:visited, a:link, a:active {
-            text-decoration: none;
-        }
+<button class="add-button">
+    <a href="../Home/CreateAdvert">
+        <i class="material-icons">add</i>
+    </a>
+</button>
+<style>
+    a:hover, a:visited, a:link, a:active {
+        text-decoration: none;
+    }
 
-        .demo-card-square.mdl-card {
-            width: 320px;
-            text-align: left;
-            display: inline-block;
-            padding: 2px;
-        }
+    .demo-card-square.mdl-card {
+        width: 320px;
+        text-align: left;
+        display: inline-block;
+        padding: 2px;
+    }
 
-        .demo-card-square > .mdl-card__title {
-            color: #fff;
-        }
+    .demo-card-square > .mdl-card__title {
+        color: #fff;
+    }
 
-        .bc_image {
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-    </style>
-    <div style="width:100%; text-align:center";>
-        <input type="text" id="searchBox" name="searchBox"/><input type="button" id="searchButton" value="OK"/>
-        @foreach (Advert adv in Model)
-        {
-            @Html.Partial("AdvertItem", adv);
-        }
-    </div>
+    .bc_image {
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+</style>
+<div style="width:100%; text-align:center" ;>
+    <input type="text" id="searchBox" name="searchBox" /><input type="button" id="searchButton" value="OK" />
+    @foreach (Advert adv in Model.List)
+    {
+        @Html.Partial("AdvertItem", adv);
+    }
+</div>

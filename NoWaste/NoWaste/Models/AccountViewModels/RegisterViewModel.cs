@@ -43,10 +43,6 @@ namespace NoWaste.Models.AccountViewModels
         [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime BirthDay { get; set; }
-
         [Required, StringLength(100)]
         [DataType(DataType.Text)]
         public String Address { get; set; }

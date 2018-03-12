@@ -68,6 +68,7 @@
                 @if (SignInManager.IsSignedIn(User))
     {
             <a class="mdl-navigation__link" href="/Home/Index">Home</a>
+            <a class="mdl-navigation__link" href="/Home/CreateAdvert">Create Advert</a>
             <a class="mdl-navigation__link" href="/Home/RequestMade">My Requests</a>
             <a class="mdl-navigation__link" href="/Home/MyAdverts">My Ads</a>
             <a class="mdl-navigation__link" href="/Home/RequestReceived">Request Received</a>
@@ -76,12 +77,12 @@
                 @await Html.PartialAsync("_LoginPartial")
             </nav>
         </div>
-        
+
         <main class="mdl-layout__content">
             <div class="page-content">@RenderBody()</div>
         </main>
     </div>
-    
+
 
     @RenderSection("Scripts", required: false)
 </body>

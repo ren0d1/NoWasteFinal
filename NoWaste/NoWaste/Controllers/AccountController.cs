@@ -213,7 +213,7 @@ namespace NoWaste.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { FirstName = model.FirstName, LastName = model.LastName, Photo = model.Photo, UserName = model.Email, Email = model.Email, Birthday = model.BirthDay, Location = model.Address, PhoneNumber = model.Phone };
+                var user = new User { FirstName = model.FirstName, LastName = model.LastName, Photo = model.Photo, UserName = model.Email, Email = model.Email, Location = model.Address, PhoneNumber = model.Phone };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
